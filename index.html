@@ -1,321 +1,435 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KALYE LUMA</title>
+
+  <title>Kalye Luma POS</title>
+
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  
-  <div class="login-screen" id="loginScreen">
-    <div class="login-card">
 
-      <div class="login-mark">
-        <span class="dot"></span>
-      </div>
 
-      <h1>KALYE LUMA</h1>
-      <p class="muted">
-        Cashier and inventory management system
-      </p>
+<div class="login-screen" id="loginScreen">
 
-      <form id="loginForm">
+  <div class="login-card">
 
-        <label for="loginUser">Username</label>
-        <input
-          id="loginUser"
-          type="text"
-          required
-        >
+    <div class="login-mark">
 
-        <label for="loginPass">Password</label>
-        <input
-          id="loginPass"
-          type="password"
-          required
-        >
+      <span class="dot"></span>
 
-        <label for="loginRole">Role</label>
-        <select id="loginRole">
-          <option value="admin">Admin</option>
-          <option value="cashier">Cashier</option>
-        </select>
-
-        <div id="loginError" class="form-error"></div>
-
-        <button
-          class="btn primary"
-          type="submit"
-        >
-          Log In
-        </button>
-
-      </form>
-
-      <div class="auth-actions">
-
-        <button
-          class="btn ghost"
-          type="button"
-          id="showSignupBtn"
-        >
-          Sign Up / Register Staff
-        </button>
-
-        <button
-          class="btn ghost"
-          type="button"
-          id="showChangePasswordBtn"
-        >
-          Change Password
-        </button>
-
-      </div>
+      <span>
+        KALYE LUMA CASHIER SYSTEM
+      </span>
 
     </div>
-  </div>
 
-  <div
-    class="signup-screen"
-    id="signupScreen"
-    style="display:none;"
-  >
 
-    <div class="login-card">
+    <h1>KALYE LUMA</h1>
 
-      <div class="login-mark">
-        <span class="dot"></span>
+    <div class="sub">
+      Sign in to open the register.
+    </div>
+
+
+    <form id="loginForm">
+
+      <div class="field">
+
+        <label for="loginUser">
+          Username
+        </label>
+
+        <input
+          type="text"
+          id="loginUser"
+          autocomplete="username"
+          required
+        >
+
       </div>
 
-      <h1>Create Staff Account</h1>
 
-      <p class="muted">
-        Register a cashier account for system access.
-      </p>
+      <div class="field">
 
-      <form id="signupForm">
+        <label for="loginPass">
+          Password
+        </label>
+
+        <div class="password-wrapper">
+
+          <input
+            type="password"
+            id="loginPass"
+            autocomplete="current-password"
+            required
+          >
+
+          <button
+            type="button"
+            id="showPasswordBtn"
+            class="show-password"
+          >
+            SHOW
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <button
+        type="submit"
+        class="btn block"
+      >
+        Log in
+      </button>
+
+
+      <button
+        type="button"
+        class="btn ghost block"
+        id="showSignupBtn"
+      >
+        Sign up
+      </button>
+
+
+      <button
+        type="button"
+        class="change-password-link"
+        id="showChangePasswordBtn"
+      >
+        Change password
+      </button>
+
+
+      <div
+        class="login-error"
+        id="loginError"
+      ></div>
+
+    </form>
+
+
+  </div>
+
+</div>
+
+
+<div
+  class="login-screen"
+  id="signupScreen"
+  style="display:none;"
+>
+
+  <div class="login-card">
+
+    <div class="login-mark">
+
+      <span class="dot"></span>
+
+      <span>
+        KALYE LUMA CASHIER SYSTEM
+      </span>
+
+    </div>
+
+
+    <h1>Sign up</h1>
+
+    <div class="sub">
+      Create a cashier account.
+    </div>
+
+
+    <form id="signupForm">
+
+      <div class="field">
 
         <label for="signupUser">
           Username
         </label>
 
         <input
-          id="signupUser"
           type="text"
+          id="signupUser"
           autocomplete="username"
           required
         >
+
+      </div>
+
+
+      <div class="field">
 
         <label for="signupPass">
           Password
         </label>
 
         <input
-          id="signupPass"
           type="password"
+          id="signupPass"
           autocomplete="new-password"
           required
         >
 
+      </div>
+
+
+      <div class="field">
+
         <label for="signupConfirmPass">
-          Confirm Password
+          Confirm password
         </label>
 
         <input
-          id="signupConfirmPass"
           type="password"
+          id="signupConfirmPass"
           autocomplete="new-password"
           required
         >
 
-        <label for="signupRole">
-          Role
-        </label>
+      </div>
 
-        <select id="signupRole">
-          <option value="cashier">
-            Cashier
-          </option>
-        </select>
 
-        <div
-          id="signupError"
-          class="form-error"
-        ></div>
+      <button
+        type="submit"
+        class="btn block"
+      >
+        Create account
+      </button>
 
-        <button
-          type="submit"
-          class="btn primary"
-        >
-          Create Account
-        </button>
 
-        <button
-          type="button"
-          class="btn ghost"
-          id="backToLoginFromSignupBtn"
-        >
-          Back to Login
-        </button>
+      <button
+        type="button"
+        class="btn ghost block"
+        id="backToLoginFromSignupBtn"
+      >
+        Back to login
+      </button>
 
-      </form>
 
-    </div>
+      <div
+        class="login-error"
+        id="signupError"
+      ></div>
+
+    </form>
 
   </div>
 
-  <div
-    class="signup-screen"
-    id="changePasswordScreen"
-    style="display:none;"
-  >
+</div>
 
-    <div class="login-card">
 
-      <div class="login-mark">
-        <span class="dot"></span>
-      </div>
+<div
+  class="login-screen"
+  id="changePasswordScreen"
+  style="display:none;"
+>
 
-      <h1>Change Password</h1>
+  <div class="login-card">
 
-      <p class="muted">
-        Update an existing staff password.
-      </p>
+    <div class="login-mark">
 
-      <form id="changePasswordForm">
+      <span class="dot"></span>
+
+      <span>
+        KALYE LUMA CASHIER SYSTEM
+      </span>
+
+    </div>
+
+
+    <h1>Change Password</h1>
+
+    <div class="sub">
+      Update your account password.
+    </div>
+
+
+    <form id="changePasswordForm">
+
+      <div class="field">
 
         <label for="changeUser">
           Username
         </label>
 
         <input
-          id="changeUser"
           type="text"
-          autocomplete="username"
+          id="changeUser"
           required
         >
+
+      </div>
+
+
+      <div class="field">
 
         <label for="newPassword">
-          New Password
+          New password
         </label>
 
         <input
-          id="newPassword"
           type="password"
-          autocomplete="new-password"
+          id="newPassword"
+          minlength="6"
           required
         >
+
+      </div>
+
+
+      <div class="field">
 
         <label for="confirmPassword">
-          Confirm Password
+          Confirm new password
         </label>
 
         <input
-          id="confirmPassword"
           type="password"
-          autocomplete="new-password"
+          id="confirmPassword"
+          minlength="6"
           required
         >
+
+      </div>
+
+
+      <div class="field">
 
         <label for="twoFactorCode">
-          2FA Code
+          2FA code
         </label>
 
         <input
-          id="twoFactorCode"
           type="text"
-          autocomplete="one-time-code"
+          id="twoFactorCode"
           required
         >
 
-        <div
-          id="changePasswordError"
-          class="form-error"
-        ></div>
+      </div>
 
-        <button
-          type="submit"
-          class="btn primary"
-        >
-          Change Password
-        </button>
 
-        <button
-          type="button"
-          class="btn ghost"
-          id="backToLoginBtn"
-        >
-          Back to Login
-        </button>
+      <button
+        type="submit"
+        class="btn block"
+      >
+        Save new password
+      </button>
 
-      </form>
 
-    </div>
+      <button
+        type="button"
+        class="btn ghost block"
+        id="backToLoginBtn"
+      >
+        Back to login
+      </button>
+
+
+      <div
+        class="login-error"
+        id="changePasswordError"
+      ></div>
+
+    </form>
 
   </div>
 
-  <div id="app">
+</div>
 
-    <aside class="sidebar">
 
-      <div class="brand">
-        KALYE LUMA
+<div
+  class="app"
+  id="app"
+>
+
+
+  <aside class="sidebar">
+
+
+    <div class="brand">
+
+      <span class="brand-dot">
+        •
+      </span>
+
+      <div class="brand-text">
+
+        Kalye Luma POS
+
+        <small>
+          CASHIER REGISTER SYSTEM
+        </small>
+
       </div>
+
+    </div>
+
+
+    <nav class="nav">
 
       <button
         class="nav-link active"
         data-view="dashboard"
       >
+
+        <span class="ico">
+          ◆
+        </span>
+
         Dashboard
+
       </button>
 
-      <div class="sidebar-bottom">
+    </nav>
 
-        <button
-          class="btn danger"
-          id="logoutBtn"
+
+    <div class="sidebar-foot">
+
+
+      <div class="user-chip">
+
+        <span
+          class="avatar"
+          id="userAvatar"
         >
-          Log Out
-        </button>
+          A
+        </span>
 
-      </div>
-
-    </aside>
-
-
-    <main class="main">
-
-      <div class="topbar">
-
-        <div>
-
-          <h2 id="pageTitle">
-            KALYE LUMA
-          </h2>
-
-          <div class="sub">
-            Cashier and inventory management
-          </div>
-
-        </div>
-
-        <div
-          class="user"
-          id="userLabel"
-        >
-          Guest
-        </div>
+        <span id="userLabel">
+          admin · admin
+        </span>
 
       </div>
 
 
-      <!-- DASHBOARD -->
-      <section
-        class="view active"
-        id="view-dashboard"
+      <button
+        class="btn sidebar-logout"
+        id="logoutBtn"
       >
+        Log out
+      </button>
+
+
+    </div>
+
+  </aside>
+
+
+  <main class="main">
+
+
+    <!-- TOP -->
+
+    <div class="topbar">
+
+      <div>
 
         <h2>
           Dashboard
@@ -323,37 +437,82 @@
 
         <p
           id="dashDate"
-          class="muted"
+          class="date-text"
         ></p>
 
-        <div
-          class="stat-row"
-          id="statRow"
-        ></div>
+      </div>
 
 
-        <!-- RECENT TRANSACTIONS -->
+      <button
+        class="reset-btn"
+        id="resetDemoBtn"
+      >
+        Reset demo data
+      </button>
+
+    </div>
+
+
+
+
+    <section
+      class="view active"
+      id="view-dashboard"
+    >
+
+
+      <div
+        class="stat-row"
+        id="statRow"
+      ></div>
+
+
+
+
+      <div class="dashboard-grid">
+
+
         <div class="panel">
 
           <h3>
-            Recent Transactions
+            Recent transactions
           </h3>
+
 
           <table>
 
             <thead>
 
               <tr>
-                <th>Receipt</th>
-                <th>Date</th>
-                <th>Items</th>
-                <th>Total</th>
-                <th>Status</th>
+
+                <th>
+                  Receipt
+                </th>
+
+                <th>
+                  Time
+                </th>
+
+                <th>
+                  Items
+                </th>
+
+                <th>
+                  Total
+                </th>
+
+                <th>
+                  Status
+                </th>
+
               </tr>
 
             </thead>
 
-            <tbody id="dashRecentTx"></tbody>
+
+            <tbody id="dashRecentTx">
+
+            </tbody>
 
           </table>
 
@@ -362,42 +521,58 @@
         <div class="panel">
 
           <h3>
-            Low Stock
+            Restock alerts
           </h3>
+
 
           <table>
 
             <thead>
 
               <tr>
-                <th>Product</th>
-                <th>Stock</th>
+
+                <th>
+                  Item
+                </th>
+
+                <th>
+                  Stock
+                </th>
+
               </tr>
 
             </thead>
 
-            <tbody id="dashLowStock"></tbody>
+
+            <tbody id="dashLowStock">
+
+            </tbody>
 
           </table>
 
         </div>
 
-      </section>
 
-    </main>
+      </div>
 
-  </div>
+    </section>
 
-  <div
-    id="toast"
-    class="toast"
-  ></div>
+  </main>
+
+</div>
 
 
-  <script src="shared.js"></script>
-  <script src="login.js"></script>
-  <script src="dashboard.js"></script>
-  <script src="logout.js"></script>
+
+<div
+  class="toast"
+  id="toast"
+></div>
+
+
+<script src="shared.js"></script>
+<script src="login.js"></script>
+<script src="dashboard.js"></script>
+<script src="logout.js"></script>
 
 </body>
 </html>
