@@ -1,72 +1,85 @@
 const loginForm =
-  document.getElementById('loginForm');
+  document.getElementById(
+    'loginForm'
+  );
 
 
 loginForm.addEventListener(
   'submit',
-  (event) => {
+  function (event) {
 
     event.preventDefault();
 
 
     const username =
       document
-        .getElementById('loginUser')
+        .getElementById(
+          'loginUser'
+        )
         .value
         .trim();
 
 
     const password =
       document
-        .getElementById('loginPass')
+        .getElementById(
+          'loginPass'
+        )
         .value;
 
 
-    const role =
+    const error =
       document
-        .getElementById('loginRole')
-        .value;
+        .getElementById(
+          'loginError'
+        );
 
 
-    const errorElement =
-      document
-        .getElementById('loginError');
-
+    /*
+      Login accepts either Admin
+      or Cashier without asking
+      the user to select a role.
+    */
 
     const user =
       DATA.users.find(
-        user =>
-          user.username === username &&
-          user.password === password &&
-          user.role === role
+        account =>
+          account.username ===
+            username &&
+          account.password ===
+            password
       );
 
 
     if (!user) {
 
-      errorElement.textContent =
-        'Incorrect username, password or role.';
+      error.textContent =
+        'Incorrect username or password.';
 
       return;
 
     }
 
 
-    errorElement.textContent = '';
+    error.textContent = '';
 
 
     SESSION = {
 
-      username: user.username,
+      username:
+        user.username,
 
-      role: user.role
+      role:
+        user.role
 
     };
 
 
     sessionStorage.setItem(
       SESSION_KEY,
-      JSON.stringify(SESSION)
+      JSON.stringify(
+        SESSION
+      )
     );
 
 
@@ -74,6 +87,48 @@ loginForm.addEventListener(
 
   }
 );
+
+
+const showPasswordBtn =
+  document.getElementById(
+    'showPasswordBtn'
+  );
+
+
+showPasswordBtn.addEventListener(
+  'click',
+  function () {
+
+    const password =
+      document.getElementById(
+        'loginPass'
+      );
+
+
+    if (
+      password.type ===
+      'password'
+    ) {
+
+      password.type =
+        'text';
+
+      showPasswordBtn.textContent =
+        'HIDE';
+
+    } else {
+
+      password.type =
+        'password';
+
+      showPasswordBtn.textContent =
+        'SHOW';
+
+    }
+
+  }
+);
+
 
 const signupScreen =
   document.getElementById(
@@ -87,208 +142,202 @@ const showSignupBtn =
   );
 
 
+const signupForm =
+  document.getElementById(
+    'signupForm'
+  );
+
+
 const backToLoginFromSignupBtn =
   document.getElementById(
     'backToLoginFromSignupBtn'
   );
 
 
-const signupForm =
-  document.getElementById(
-    'signupForm'
-  );
+showSignupBtn.addEventListener(
+  'click',
+  function () {
 
-if (showSignupBtn) {
+    document
+      .getElementById(
+        'loginScreen'
+      )
+      .style.display =
+      'none';
 
-  showSignupBtn.addEventListener(
-    'click',
-    () => {
 
+    signupScreen.style.display =
+      'flex';
+
+
+    signupForm.reset();
+
+  }
+);
+
+
+backToLoginFromSignupBtn.addEventListener(
+  'click',
+  function () {
+
+    signupScreen.style.display =
+      'none';
+
+
+    document
+      .getElementById(
+        'loginScreen'
+      )
+      .style.display =
+      'flex';
+
+
+    signupForm.reset();
+
+  }
+);
+
+
+
+/* SIGN UP SUBMIT */
+
+signupForm.addEventListener(
+  'submit',
+  function (event) {
+
+    event.preventDefault();
+
+
+    const username =
       document
-        .getElementById('loginScreen')
-        .style.display = 'none';
+        .getElementById(
+          'signupUser'
+        )
+        .value
+        .trim();
 
 
-      signupScreen.style.display =
-        'flex';
-
-
+    const password =
       document
-        .getElementById('signupError')
-        .textContent = '';
+        .getElementById(
+          'signupPass'
+        )
+        .value;
 
 
-      signupForm.reset();
-
-    }
-  );
-
-}
-
-if (backToLoginFromSignupBtn) {
-
-  backToLoginFromSignupBtn
-    .addEventListener(
-      'click',
-      () => {
-
-        signupScreen.style.display =
-          'none';
+    const confirmPassword =
+      document
+        .getElementById(
+          'signupConfirmPass'
+        )
+        .value;
 
 
-        document
-          .getElementById('loginScreen')
-          .style.display = 'flex';
-
-
-        signupForm.reset();
-
-      }
-    );
-
-}
-
-if (signupForm) {
-
-  signupForm.addEventListener(
-    'submit',
-    (event) => {
-
-      event.preventDefault();
-
-
-      const username =
-        document
-          .getElementById('signupUser')
-          .value
-          .trim();
-
-
-      const password =
-        document
-          .getElementById('signupPass')
-          .value;
-
-
-      const confirmPassword =
-        document
-          .getElementById('signupConfirmPass')
-          .value;
-
-
-      const role =
-        document
-          .getElementById('signupRole')
-          .value;
-
-
-      const errorElement =
-        document
-          .getElementById('signupError');
-
-      if (
-        !username ||
-        !password ||
-        !confirmPassword ||
-        !role
-      ) {
-
-        errorElement.textContent =
-          'Please complete all fields.';
-
-        return;
-
-      }
-
-
-      if (username.length < 3) {
-
-        errorElement.textContent =
-          'Username must be at least 3 characters.';
-
-        return;
-
-      }
-
-      if (password.length < 6) {
-
-        errorElement.textContent =
-          'Password must be at least 6 characters.';
-
-        return;
-
-      }
-
-      if (password !== confirmPassword) {
-
-        errorElement.textContent =
-          'Passwords do not match.';
-
-        return;
-
-      }
-
-      const existingUser =
-        DATA.users.find(
-          user =>
-            user.username.toLowerCase() ===
-            username.toLowerCase()
+    const error =
+      document
+        .getElementById(
+          'signupError'
         );
 
 
-      if (existingUser) {
+    if (
+      username.length < 3
+    ) {
 
-        errorElement.textContent =
-          'Username is already registered.';
+      error.textContent =
+        'Username must be at least 3 characters.';
 
-        return;
-
-      }
-
-      if (role !== 'cashier') {
-
-        errorElement.textContent =
-          'Only Cashier accounts can be registered here.';
-
-        return;
-
-      }
-
-      DATA.users.push({
-
-        username: username,
-
-        password: password,
-
-        role: 'cashier'
-
-      });
-
-
-      saveData();
-
-      errorElement.textContent = '';
-
-      signupForm.reset();
-
-      signupScreen.style.display =
-        'none';
-
-
-      document
-        .getElementById('loginScreen')
-        .style.display = 'flex';
-
-
-      document
-        .getElementById('loginError')
-        .textContent =
-          'Account created successfully. You can now log in.';
+      return;
 
     }
-  );
 
-}
+
+    if (
+      password.length < 6
+    ) {
+
+      error.textContent =
+        'Password must be at least 6 characters.';
+
+      return;
+
+    }
+
+
+    if (
+      password !==
+      confirmPassword
+    ) {
+
+      error.textContent =
+        'Passwords do not match.';
+
+      return;
+
+    }
+
+
+    const exists =
+      DATA.users.find(
+        user =>
+          user.username
+            .toLowerCase() ===
+          username.toLowerCase()
+      );
+
+
+    if (exists) {
+
+      error.textContent =
+        'Username is already registered.';
+
+      return;
+
+    }
+
+
+    DATA.users.push({
+
+      username:
+        username,
+
+      password:
+        password,
+
+      role:
+        'cashier'
+
+    });
+
+
+    saveData();
+
+
+    signupForm.reset();
+
+
+    signupScreen.style.display =
+      'none';
+
+
+    document
+      .getElementById(
+        'loginScreen'
+      )
+      .style.display =
+      'flex';
+
+
+    document
+      .getElementById(
+        'loginError'
+      )
+      .textContent =
+      'Account created successfully.';
+
+  }
+);
+
 
 const changePasswordScreen =
   document.getElementById(
@@ -313,37 +362,40 @@ const changePasswordForm =
     'changePasswordForm'
   );
 
+
 showChangePasswordBtn.addEventListener(
   'click',
-  () => {
+  function () {
 
     document
-      .getElementById('loginScreen')
-      .style.display = 'none';
+      .getElementById(
+        'loginScreen'
+      )
+      .style.display =
+      'none';
 
 
     changePasswordScreen.style.display =
       'flex';
 
-
-    document
-      .getElementById('changePasswordError')
-      .textContent = '';
-
   }
 );
 
+
 backToLoginBtn.addEventListener(
   'click',
-  () => {
+  function () {
 
     changePasswordScreen.style.display =
       'none';
 
 
     document
-      .getElementById('loginScreen')
-      .style.display = 'flex';
+      .getElementById(
+        'loginScreen'
+      )
+      .style.display =
+      'flex';
 
 
     changePasswordForm.reset();
@@ -351,80 +403,49 @@ backToLoginBtn.addEventListener(
   }
 );
 
-async function getTwoFactorCode() {
-
-  try {
-
-    const response =
-      await fetch(
-        '2fa_code.txt',
-        {
-          cache: 'no-store'
-        }
-      );
-
-
-    if (response.ok) {
-
-      const code =
-        (
-          await response.text()
-        ).trim();
-
-
-      if (code) {
-
-        return code;
-
-      }
-
-    }
-
-  } catch (error) {
-
-  }
-
-
-  return atob(
-    'S0FMWUUtNDgyOTE3'
-  );
-
-}
 
 changePasswordForm.addEventListener(
   'submit',
-  async (event) => {
+  function (event) {
 
     event.preventDefault();
 
 
     const username =
       document
-        .getElementById('changeUser')
+        .getElementById(
+          'changeUser'
+        )
         .value
         .trim();
 
 
     const newPassword =
       document
-        .getElementById('newPassword')
+        .getElementById(
+          'newPassword'
+        )
         .value;
 
 
     const confirmPassword =
       document
-        .getElementById('confirmPassword')
+        .getElementById(
+          'confirmPassword'
+        )
         .value;
 
 
-    const enteredCode =
+    const code =
       document
-        .getElementById('twoFactorCode')
+        .getElementById(
+          'twoFactorCode'
+        )
         .value
         .trim();
 
 
-    const errorElement =
+    const error =
       document
         .getElementById(
           'changePasswordError'
@@ -433,14 +454,15 @@ changePasswordForm.addEventListener(
 
     const user =
       DATA.users.find(
-        user =>
-          user.username === username
+        account =>
+          account.username ===
+          username
       );
 
 
     if (!user) {
 
-      errorElement.textContent =
+      error.textContent =
         'Username not found.';
 
       return;
@@ -448,9 +470,11 @@ changePasswordForm.addEventListener(
     }
 
 
-    if (newPassword.length < 6) {
+    if (
+      newPassword.length < 6
+    ) {
 
-      errorElement.textContent =
+      error.textContent =
         'Password must be at least 6 characters.';
 
       return;
@@ -458,10 +482,12 @@ changePasswordForm.addEventListener(
     }
 
 
+    if (
+      newPassword !==
+      confirmPassword
+    ) {
 
-    if (newPassword !== confirmPassword) {
-
-      errorElement.textContent =
+      error.textContent =
         'Passwords do not match.';
 
       return;
@@ -469,19 +495,22 @@ changePasswordForm.addEventListener(
     }
 
 
+    /*
+      Demo 2FA code.
+    */
 
-    const adminCode =
-      await getTwoFactorCode();
+    if (
+      code !==
+      'KALYE-482917'
+    ) {
 
-
-    if (enteredCode !== adminCode) {
-
-      errorElement.textContent =
+      error.textContent =
         'Invalid 2FA code.';
 
       return;
 
     }
+
 
     user.password =
       newPassword;
@@ -490,23 +519,27 @@ changePasswordForm.addEventListener(
     saveData();
 
 
-    errorElement.textContent = '';
-
     changePasswordForm.reset();
+
 
     changePasswordScreen.style.display =
       'none';
 
 
     document
-      .getElementById('loginScreen')
-      .style.display = 'flex';
+      .getElementById(
+        'loginScreen'
+      )
+      .style.display =
+      'flex';
 
 
     document
-      .getElementById('loginError')
+      .getElementById(
+        'loginError'
+      )
       .textContent =
-        'Password changed successfully. You can now log in.';
+      'Password changed successfully.';
 
   }
 );
