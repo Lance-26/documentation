@@ -1,6 +1,8 @@
 function renderDashboard() {
   document
-    .getElementById('dashDate')
+    .getElementById(
+      'dashDate'
+    )
     .textContent =
       new Date().toLocaleDateString(
         undefined,
@@ -12,54 +14,77 @@ function renderDashboard() {
         }
       );
 
+
+
   const today =
     todayStr();
 
-  const todaysTx =
+
+  const todaysTransactions =
     DATA.transactions.filter(
       transaction =>
-        transaction.dateISO.slice(0, 10) === today &&
-        transaction.status === 'completed'
+        transaction.dateISO
+          .slice(0, 10) ===
+        today &&
+        transaction.status ===
+          'completed'
     );
 
-  const todaysRevenue =
-    todaysTx.reduce(
-      (sum, transaction) =>
-        sum + transaction.total,
+
+
+  const sales =
+    todaysTransactions.reduce(
+      (total, transaction) =>
+        total +
+        Number(
+          transaction.total
+        ),
       0
     );
+
 
   const lowStock =
     DATA.products.filter(
       product =>
-        product.stock <= product.threshold
+        product.stock <=
+        product.threshold
     );
+
+
 
   const stats = [
 
     {
-      label: "Today's sales",
+      label:
+        "Today's sales",
 
-      value: fmt(todaysRevenue),
+      value:
+        fmt(sales),
 
       sub:
-        todaysTx.length +
+        todaysTransactions.length +
         ' orders'
+
     },
 
     {
-      label: 'Transactions today',
+
+      label:
+        'Transactions today',
 
       value:
-        todaysTx.length,
+        todaysTransactions.length,
 
       sub:
         DATA.transactions.length +
         ' all-time'
+
     },
 
     {
-      label: 'Products tracked',
+
+      label:
+        'Products tracked',
 
       value:
         DATA.products.length,
@@ -67,45 +92,49 @@ function renderDashboard() {
       sub:
         DATA.products.filter(
           product =>
-            product.category === 'food'
+            product.category ===
+            'food'
         ).length +
         ' food · ' +
 
         DATA.products.filter(
           product =>
-            product.category === 'game'
+            product.category ===
+            'game'
         ).length +
         ' games'
+
     },
 
     {
-      label: 'Restock alerts',
+
+      label:
+        'Restock alerts',
 
       value:
         lowStock.length,
 
       sub:
-        lowStock.length
-          ? 'needs attention'
-          : 'none',
-
-      alert:
         lowStock.length > 0
+          ? 'needs attention'
+          : 'all stocked'
+
     }
 
   ];
 
 
+
   document
-    .getElementById('statRow')
+    .getElementById(
+      'statRow'
+    )
     .innerHTML =
 
-      stats
-        .map(stat => `
+      stats.map(
+        stat => `
 
-          <div class="stat-card ${
-            stat.alert ? 'alert' : ''
-          }">
+          <div class="stat-card">
 
             <div class="label">
               ${stat.label}
@@ -121,8 +150,8 @@ function renderDashboard() {
 
           </div>
 
-        `)
-        .join('');
+        `
+      ).join('');
 
 
   const recent =
@@ -136,99 +165,119 @@ function renderDashboard() {
 
 
   document
-    .getElementById('dashRecentTx')
+    .getElementById(
+      'dashRecentTx'
+    )
     .innerHTML =
 
       recent.length
 
-        ? recent
-            .map(transaction => `
+        ?
 
-              <tr>
+        recent.map(
+          transaction => `
 
-                <td>
-                  ${transaction.receiptNo}
-                </td>
+            <tr>
 
-                <td>
-                  ${niceDateTime(
-                    transaction.dateISO
-                  )}
-                </td>
+              <td>
+                ${transaction.receiptNo}
+              </td>
 
-                <td>
-                  ${
-                    transaction.items.reduce(
+              <td>
+                ${niceDateTime(
+                  transaction.dateISO
+                )}
+              </td>
+
+              <td>
+                ${
+                  transaction.items
+                    .reduce(
                       (sum, item) =>
                         sum + item.qty,
                       0
                     )
-                  } item(s)
-                </td>
+                }
+              </td>
 
-                <td>
-                  ${fmt(transaction.total)}
-                </td>
+              <td>
+                ${fmt(
+                  transaction.total
+                )}
+              </td>
 
-                <td>
+              <td>
 
-                  <span
-                    class="tag ${
-                      transaction.status
-                    }"
-                  >
-                    ${transaction.status}
-                  </span>
+                <span
+                  class="tag ${
+                    transaction.status
+                  }"
+                >
+                  ${transaction.status}
+                </span>
 
-                </td>
+              </td>
 
-              </tr>
+            </tr>
 
-            `)
-            .join('')
+          `
+        ).join('')
 
-        : `
+        :
+
+        `
 
           <tr class="empty-row">
 
             <td colspan="5">
+
               No transactions yet.
+
             </td>
 
           </tr>
 
         `;
 
+
   document
-    .getElementById('dashLowStock')
+    .getElementById(
+      'dashLowStock'
+    )
     .innerHTML =
 
       lowStock.length
 
-        ? lowStock
-            .map(product => `
+        ?
 
-              <tr class="low-stock">
+        lowStock.map(
+          product => `
 
-                <td>
-                  ${product.name}
-                </td>
+            <tr class="low-stock">
 
-                <td>
-                  ${product.stock} left
-                </td>
+              <td>
+                ${product.name}
+              </td>
 
-              </tr>
+              <td>
+                ${product.stock}
+              </td>
 
-            `)
-            .join('')
+            </tr>
 
-        : `
+          `
+        ).join('')
+
+        :
+
+        `
 
           <tr class="empty-row">
 
             <td colspan="2">
+
               Nothing needs restocking.
+
             </td>
 
           </tr>
@@ -236,3 +285,42 @@ function renderDashboard() {
         `;
 
 }
+
+
+document
+  .getElementById(
+    'resetDemoBtn'
+  )
+  .addEventListener(
+    'click',
+    function () {
+
+      const confirmed =
+        confirm(
+          'Reset all demo data?'
+        );
+
+
+      if (!confirmed) {
+
+        return;
+
+      }
+
+
+      DATA =
+        seedData();
+
+
+      saveData();
+
+
+      renderDashboard();
+
+
+      toast(
+        'Demo data has been reset.'
+      );
+
+    }
+  );
