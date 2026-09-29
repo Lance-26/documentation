@@ -1,7 +1,8 @@
 const loginForm =
-  document.getElementById(
-    'loginForm'
-  );
+  document.getElementById('loginForm');
+
+const showChangePasswordBtn =
+  document.getElementById('showChangePasswordBtn');
 
 
 loginForm.addEventListener(
@@ -10,58 +11,61 @@ loginForm.addEventListener(
 
     event.preventDefault();
 
-
     const username =
       document
-        .getElementById(
-          'loginUser'
-        )
+        .getElementById('loginUser')
         .value
         .trim();
 
-
     const password =
       document
-        .getElementById(
-          'loginPass'
-        )
+        .getElementById('loginPass')
         .value;
-
 
     const error =
       document
-        .getElementById(
-          'loginError'
-        );
+        .getElementById('loginError');
 
-
-    /*
-      Login accepts either Admin
-      or Cashier without asking
-      the user to select a role.
-    */
 
     const user =
       DATA.users.find(
         account =>
-          account.username ===
-            username &&
-          account.password ===
-            password
+          account.username.toLowerCase() ===
+          username.toLowerCase()
       );
 
 
     if (!user) {
 
       error.textContent =
-        'Incorrect username or password.';
+        'Username not found.';
+
+      showChangePasswordBtn.style.display =
+        'none';
 
       return;
-
     }
 
 
+    /* Password is incorrect */
+
+    if (user.password !== password) {
+
+      error.textContent =
+        'Incorrect password.';
+
+      showChangePasswordBtn.style.display =
+        'block';
+
+      return;
+    }
+
+
+
     error.textContent = '';
+
+    showChangePasswordBtn.style.display =
+      'none';
 
 
     SESSION = {
@@ -77,9 +81,7 @@ loginForm.addEventListener(
 
     sessionStorage.setItem(
       SESSION_KEY,
-      JSON.stringify(
-        SESSION
-      )
+      JSON.stringify(SESSION)
     );
 
 
@@ -106,20 +108,17 @@ showPasswordBtn.addEventListener(
 
 
     if (
-      password.type ===
-      'password'
+      password.type === 'password'
     ) {
 
-      password.type =
-        'text';
+      password.type = 'text';
 
       showPasswordBtn.textContent =
         'HIDE';
 
     } else {
 
-      password.type =
-        'password';
+      password.type = 'password';
 
       showPasswordBtn.textContent =
         'SHOW';
@@ -135,18 +134,15 @@ const signupScreen =
     'signupScreen'
   );
 
-
 const showSignupBtn =
   document.getElementById(
     'showSignupBtn'
   );
 
-
 const signupForm =
   document.getElementById(
     'signupForm'
   );
-
 
 const backToLoginFromSignupBtn =
   document.getElementById(
@@ -159,16 +155,11 @@ showSignupBtn.addEventListener(
   function () {
 
     document
-      .getElementById(
-        'loginScreen'
-      )
-      .style.display =
-      'none';
-
+      .getElementById('loginScreen')
+      .style.display = 'none';
 
     signupScreen.style.display =
       'flex';
-
 
     signupForm.reset();
 
@@ -183,14 +174,10 @@ backToLoginFromSignupBtn.addEventListener(
     signupScreen.style.display =
       'none';
 
-
     document
-      .getElementById(
-        'loginScreen'
-      )
+      .getElementById('loginScreen')
       .style.display =
       'flex';
-
 
     signupForm.reset();
 
@@ -198,90 +185,64 @@ backToLoginFromSignupBtn.addEventListener(
 );
 
 
-
-/* SIGN UP SUBMIT */
-
 signupForm.addEventListener(
   'submit',
   function (event) {
 
     event.preventDefault();
 
-
     const username =
       document
-        .getElementById(
-          'signupUser'
-        )
+        .getElementById('signupUser')
         .value
         .trim();
 
-
     const password =
       document
-        .getElementById(
-          'signupPass'
-        )
+        .getElementById('signupPass')
         .value;
-
 
     const confirmPassword =
       document
-        .getElementById(
-          'signupConfirmPass'
-        )
+        .getElementById('signupConfirmPass')
         .value;
-
 
     const error =
       document
-        .getElementById(
-          'signupError'
-        );
+        .getElementById('signupError');
 
 
-    if (
-      username.length < 3
-    ) {
+    if (username.length < 3) {
 
       error.textContent =
         'Username must be at least 3 characters.';
 
       return;
-
     }
 
 
-    if (
-      password.length < 6
-    ) {
+    if (password.length < 6) {
 
       error.textContent =
         'Password must be at least 6 characters.';
 
       return;
-
     }
 
 
-    if (
-      password !==
-      confirmPassword
-    ) {
+    if (password !== confirmPassword) {
 
       error.textContent =
         'Passwords do not match.';
 
       return;
-
     }
 
 
     const exists =
       DATA.users.find(
         user =>
-          user.username
-            .toLowerCase() ===
+          user.username.toLowerCase() ===
           username.toLowerCase()
       );
 
@@ -292,46 +253,34 @@ signupForm.addEventListener(
         'Username is already registered.';
 
       return;
-
     }
 
 
     DATA.users.push({
 
-      username:
-        username,
+      username: username,
 
-      password:
-        password,
+      password: password,
 
-      role:
-        'cashier'
+      role: 'cashier'
 
     });
 
 
     saveData();
 
-
     signupForm.reset();
-
 
     signupScreen.style.display =
       'none';
 
-
     document
-      .getElementById(
-        'loginScreen'
-      )
+      .getElementById('loginScreen')
       .style.display =
       'flex';
 
-
     document
-      .getElementById(
-        'loginError'
-      )
+      .getElementById('loginError')
       .textContent =
       'Account created successfully.';
 
@@ -339,23 +288,16 @@ signupForm.addEventListener(
 );
 
 
+
 const changePasswordScreen =
   document.getElementById(
     'changePasswordScreen'
   );
 
-
-const showChangePasswordBtn =
-  document.getElementById(
-    'showChangePasswordBtn'
-  );
-
-
 const backToLoginBtn =
   document.getElementById(
     'backToLoginBtn'
   );
-
 
 const changePasswordForm =
   document.getElementById(
@@ -368,12 +310,9 @@ showChangePasswordBtn.addEventListener(
   function () {
 
     document
-      .getElementById(
-        'loginScreen'
-      )
+      .getElementById('loginScreen')
       .style.display =
       'none';
-
 
     changePasswordScreen.style.display =
       'flex';
@@ -389,19 +328,16 @@ backToLoginBtn.addEventListener(
     changePasswordScreen.style.display =
       'none';
 
-
     document
-      .getElementById(
-        'loginScreen'
-      )
+      .getElementById('loginScreen')
       .style.display =
       'flex';
-
 
     changePasswordForm.reset();
 
   }
 );
+
 
 
 changePasswordForm.addEventListener(
@@ -410,53 +346,38 @@ changePasswordForm.addEventListener(
 
     event.preventDefault();
 
-
     const username =
       document
-        .getElementById(
-          'changeUser'
-        )
+        .getElementById('changeUser')
         .value
         .trim();
-
 
     const newPassword =
       document
-        .getElementById(
-          'newPassword'
-        )
+        .getElementById('newPassword')
         .value;
-
 
     const confirmPassword =
       document
-        .getElementById(
-          'confirmPassword'
-        )
+        .getElementById('confirmPassword')
         .value;
-
 
     const code =
       document
-        .getElementById(
-          'twoFactorCode'
-        )
+        .getElementById('twoFactorCode')
         .value
         .trim();
 
-
     const error =
       document
-        .getElementById(
-          'changePasswordError'
-        );
+        .getElementById('changePasswordError');
 
 
     const user =
       DATA.users.find(
         account =>
-          account.username ===
-          username
+          account.username.toLowerCase() ===
+          username.toLowerCase()
       );
 
 
@@ -466,83 +387,63 @@ changePasswordForm.addEventListener(
         'Username not found.';
 
       return;
-
     }
 
 
-    if (
-      newPassword.length < 6
-    ) {
+    if (newPassword.length < 6) {
 
       error.textContent =
         'Password must be at least 6 characters.';
 
       return;
-
     }
 
 
-    if (
-      newPassword !==
-      confirmPassword
-    ) {
+    if (newPassword !== confirmPassword) {
 
       error.textContent =
         'Passwords do not match.';
 
       return;
-
     }
 
 
-    /*
-      Demo 2FA code.
-    */
 
-    if (
-      code !==
-      'KALYE-482917'
-    ) {
+    if (code !== 'KALYE-482917') {
 
       error.textContent =
         'Invalid 2FA code.';
 
       return;
-
     }
 
 
     user.password =
       newPassword;
 
-
     saveData();
 
-
     changePasswordForm.reset();
-
 
     changePasswordScreen.style.display =
       'none';
 
-
     document
-      .getElementById(
-        'loginScreen'
-      )
+      .getElementById('loginScreen')
       .style.display =
       'flex';
 
-
     document
-      .getElementById(
-        'loginError'
-      )
+      .getElementById('loginError')
       .textContent =
       'Password changed successfully.';
 
+    showChangePasswordBtn.style.display =
+      'none';
+
   }
 );
+
 
 
 if (SESSION) {
