@@ -1,6 +1,10 @@
+const STORAGE_KEY =
+  'kalye_luma_proper_ui_v1';
 
-const STORAGE_KEY = 'kalye_luma_3_modules_data_v1';
-const SESSION_KEY = 'kalye_luma_session_v1';
+const SESSION_KEY =
+  'kalye_luma_session_v1';
+
+
 
 function seedData() {
 
@@ -30,23 +34,29 @@ function seedData() {
 
 }
 
+
 function loadData() {
 
   const raw =
-    localStorage.getItem(STORAGE_KEY);
+    localStorage.getItem(
+      STORAGE_KEY
+    );
+
 
   if (!raw) {
 
-    const seeded = seedData();
+    const data =
+      seedData();
 
     localStorage.setItem(
       STORAGE_KEY,
-      JSON.stringify(seeded)
+      JSON.stringify(data)
     );
 
-    return seeded;
+    return data;
 
   }
+
 
   try {
 
@@ -54,14 +64,15 @@ function loadData() {
 
   } catch (error) {
 
-    const seeded = seedData();
+    const data =
+      seedData();
 
     localStorage.setItem(
       STORAGE_KEY,
-      JSON.stringify(seeded)
+      JSON.stringify(data)
     );
 
-    return seeded;
+    return data;
 
   }
 
@@ -78,19 +89,29 @@ function saveData() {
 }
 
 
-let DATA = loadData();
+
+let DATA =
+  loadData();
+
 
 let SESSION =
   JSON.parse(
-    sessionStorage.getItem(SESSION_KEY) || 'null'
+    sessionStorage.getItem(
+      SESSION_KEY
+    ) || 'null'
   );
+
 
 
 function fmt(number) {
 
-  return '₱' + Number(number).toFixed(2);
+  return '₱' +
+    Number(number)
+      .toFixed(2);
 
 }
+
+
 
 
 function todayStr() {
@@ -101,9 +122,12 @@ function todayStr() {
 
 }
 
+
 function niceDateTime(iso) {
 
-  const date = new Date(iso);
+  const date =
+    new Date(iso);
+
 
   return date.toLocaleString(
     undefined,
@@ -120,29 +144,45 @@ function niceDateTime(iso) {
 
 let toastTimer;
 
-function toast(message, isError = false) {
+
+function toast(
+  message,
+  isError = false
+) {
 
   const element =
-    document.getElementById('toast');
+    document.getElementById(
+      'toast'
+    );
 
-  if (!element) {
-    return;
-  }
 
-  element.textContent = message;
+  element.textContent =
+    message;
+
 
   element.className =
     'toast show' +
-    (isError ? ' error' : '');
+    (isError
+      ? ' error'
+      : '');
 
-  clearTimeout(toastTimer);
+
+  clearTimeout(
+    toastTimer
+  );
+
 
   toastTimer =
-    setTimeout(() => {
+    setTimeout(
+      () => {
 
-      element.classList.remove('show');
+        element.classList.remove(
+          'show'
+        );
 
-    }, 2600);
+      },
+      2600
+    );
 
 }
 
@@ -154,7 +194,9 @@ function showView(name) {
     .querySelectorAll('.view')
     .forEach(view => {
 
-      view.classList.remove('active');
+      view.classList.remove(
+        'active'
+      );
 
     });
 
@@ -167,7 +209,9 @@ function showView(name) {
 
   if (target) {
 
-    target.classList.add('active');
+    target.classList.add(
+      'active'
+    );
 
   }
 
@@ -186,61 +230,63 @@ function showView(name) {
 }
 
 
-document
-  .querySelectorAll('.nav-link')
-  .forEach(link => {
-
-    link.addEventListener(
-      'click',
-      () => {
-
-        showView(
-          link.dataset.view
-        );
-
-      }
-    );
-
-  });
-
-
-function renderAll() {
-
-  renderDashboard();
-
-}
-
-
 function enterApp() {
 
   document
-    .getElementById('loginScreen')
-    .style.display = 'none';
-
-  document
-    .getElementById('signupScreen')
-    .style.display = 'none';
-
-  document
-    .getElementById('changePasswordScreen')
+    .getElementById(
+      'loginScreen'
+    )
     .style.display = 'none';
 
 
   document
-    .getElementById('app')
-    .classList.add('active');
+    .getElementById(
+      'signupScreen'
+    )
+    .style.display = 'none';
 
 
   document
-    .getElementById('userLabel')
+    .getElementById(
+      'changePasswordScreen'
+    )
+    .style.display = 'none';
+
+
+  document
+    .getElementById(
+      'app'
+    )
+    .classList.add(
+      'active'
+    );
+
+
+  document
+    .getElementById(
+      'userLabel'
+    )
     .textContent =
       SESSION.username +
       ' · ' +
       SESSION.role;
 
 
-  showView('dashboard');
+  document
+    .getElementById(
+      'userAvatar'
+    )
+    .textContent =
+      SESSION.username
+        .charAt(0)
+        .toUpperCase();
 
-  renderAll();
+
+  showView(
+    'dashboard'
+  );
+
+
+  renderDashboard();
 
 }
