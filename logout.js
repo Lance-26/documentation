@@ -1,28 +1,47 @@
 document
-  .getElementById('logoutBtn')
+  .getElementById(
+    'logoutBtn'
+  )
   .addEventListener(
     'click',
-    () => {
+    function () {
 
       SESSION = null;
+
 
       sessionStorage.removeItem(
         SESSION_KEY
       );
 
       document
-        .getElementById('app')
-        .classList.remove('active');
+        .getElementById(
+          'app'
+        )
+        .classList.remove(
+          'active'
+        );
 
       document
-        .getElementById('loginScreen')
-        .style.display = 'flex';
+        .getElementById(
+          'loginScreen'
+        )
+        .style.display =
+        'flex';
 
-      loginForm.reset();
+
+      /* Clear form */
+
+      document
+        .getElementById(
+          'loginForm'
+        )
+        .reset();
 
 
       document
-        .getElementById('loginError')
+        .getElementById(
+          'loginError'
+        )
         .textContent = '';
 
     }
