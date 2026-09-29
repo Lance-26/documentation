@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KALYE LUMA</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  
+  <div class="login-screen" id="loginScreen">
+    <div class="login-card">
+
+      <div class="login-mark">
+        <span class="dot"></span>
+      </div>
+
+      <h1>KALYE LUMA</h1>
+      <p class="muted">
+        Cashier and inventory management system
+      </p>
+
+      <form id="loginForm">
+
+        <label for="loginUser">Username</label>
+        <input
+          id="loginUser"
+          type="text"
+          required
+        >
+
+        <label for="loginPass">Password</label>
+        <input
+          id="loginPass"
+          type="password"
+          required
+        >
+
+        <label for="loginRole">Role</label>
+        <select id="loginRole">
+          <option value="admin">Admin</option>
+          <option value="cashier">Cashier</option>
+        </select>
+
+        <div id="loginError" class="form-error"></div>
+
+        <button
+          class="btn primary"
+          type="submit"
+        >
+          Log In
+        </button>
+
+      </form>
+
+      <div class="auth-actions">
+
+        <button
+          class="btn ghost"
+          type="button"
+          id="showSignupBtn"
+        >
+          Sign Up / Register Staff
+        </button>
+
+        <button
+          class="btn ghost"
+          type="button"
+          id="showChangePasswordBtn"
+        >
+          Change Password
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+
+  <div
+    class="signup-screen"
+    id="signupScreen"
+    style="display:none;"
+  >
+
+    <div class="login-card">
+
+      <div class="login-mark">
+        <span class="dot"></span>
+      </div>
+
+      <h1>Create Staff Account</h1>
+
+      <p class="muted">
+        Register a cashier account for system access.
+      </p>
+
+      <form id="signupForm">
+
+        <label for="signupUser">
+          Username
+        </label>
+
+        <input
+          id="signupUser"
+          type="text"
+          autocomplete="username"
+          required
+        >
+
+        <label for="signupPass">
+          Password
+        </label>
+
+        <input
+          id="signupPass"
+          type="password"
+          autocomplete="new-password"
+          required
+        >
+
+        <label for="signupConfirmPass">
+          Confirm Password
+        </label>
+
+        <input
+          id="signupConfirmPass"
+          type="password"
+          autocomplete="new-password"
+          required
+        >
+
+        <label for="signupRole">
+          Role
+        </label>
+
+        <select id="signupRole">
+          <option value="cashier">
+            Cashier
+          </option>
+        </select>
+
+        <div
+          id="signupError"
+          class="form-error"
+        ></div>
+
+        <button
+          type="submit"
+          class="btn primary"
+        >
+          Create Account
+        </button>
+
+        <button
+          type="button"
+          class="btn ghost"
+          id="backToLoginFromSignupBtn"
+        >
+          Back to Login
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+  <div
+    class="signup-screen"
+    id="changePasswordScreen"
+    style="display:none;"
+  >
+
+    <div class="login-card">
+
+      <div class="login-mark">
+        <span class="dot"></span>
+      </div>
+
+      <h1>Change Password</h1>
+
+      <p class="muted">
+        Update an existing staff password.
+      </p>
+
+      <form id="changePasswordForm">
+
+        <label for="changeUser">
+          Username
+        </label>
+
+        <input
+          id="changeUser"
+          type="text"
+          autocomplete="username"
+          required
+        >
+
+        <label for="newPassword">
+          New Password
+        </label>
+
+        <input
+          id="newPassword"
+          type="password"
+          autocomplete="new-password"
+          required
+        >
+
+        <label for="confirmPassword">
+          Confirm Password
+        </label>
+
+        <input
+          id="confirmPassword"
+          type="password"
+          autocomplete="new-password"
+          required
+        >
+
+        <label for="twoFactorCode">
+          2FA Code
+        </label>
+
+        <input
+          id="twoFactorCode"
+          type="text"
+          autocomplete="one-time-code"
+          required
+        >
+
+        <div
+          id="changePasswordError"
+          class="form-error"
+        ></div>
+
+        <button
+          type="submit"
+          class="btn primary"
+        >
+          Change Password
+        </button>
+
+        <button
+          type="button"
+          class="btn ghost"
+          id="backToLoginBtn"
+        >
+          Back to Login
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+  <div id="app">
+
+    <aside class="sidebar">
+
+      <div class="brand">
+        KALYE LUMA
+      </div>
+
+      <button
+        class="nav-link active"
+        data-view="dashboard"
+      >
+        Dashboard
+      </button>
+
+      <div class="sidebar-bottom">
+
+        <button
+          class="btn danger"
+          id="logoutBtn"
+        >
+          Log Out
+        </button>
+
+      </div>
+
+    </aside>
+
+
+    <main class="main">
+
+      <div class="topbar">
+
+        <div>
+
+          <h2 id="pageTitle">
+            KALYE LUMA
+          </h2>
+
+          <div class="sub">
+            Cashier and inventory management
+          </div>
+
+        </div>
+
+        <div
+          class="user"
+          id="userLabel"
+        >
+          Guest
+        </div>
+
+      </div>
+
+
+      <!-- DASHBOARD -->
+      <section
+        class="view active"
+        id="view-dashboard"
+      >
+
+        <h2>
+          Dashboard
+        </h2>
+
+        <p
+          id="dashDate"
+          class="muted"
+        ></p>
+
+        <div
+          class="stat-row"
+          id="statRow"
+        ></div>
+
+
+        <!-- RECENT TRANSACTIONS -->
+        <div class="panel">
+
+          <h3>
+            Recent Transactions
+          </h3>
+
+          <table>
+
+            <thead>
+
+              <tr>
+                <th>Receipt</th>
+                <th>Date</th>
+                <th>Items</th>
+                <th>Total</th>
+                <th>Status</th>
+              </tr>
+
+            </thead>
+
+            <tbody id="dashRecentTx"></tbody>
+
+          </table>
+
+        </div>
+
+        <div class="panel">
+
+          <h3>
+            Low Stock
+          </h3>
+
+          <table>
+
+            <thead>
+
+              <tr>
+                <th>Product</th>
+                <th>Stock</th>
+              </tr>
+
+            </thead>
+
+            <tbody id="dashLowStock"></tbody>
+
+          </table>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+  <div
+    id="toast"
+    class="toast"
+  ></div>
+
+
+  <script src="shared.js"></script>
+  <script src="login.js"></script>
+  <script src="dashboard.js"></script>
+  <script src="logout.js"></script>
+
+</body>
+</html>
